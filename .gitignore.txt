@@ -1,0 +1,10 @@
+# Ignore Data Files (GitHub is for code, not huge data)
+*.csv
+*.db
+*.xlsx
+
+# Ignore System/Cache files
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+.env
