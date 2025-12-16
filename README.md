@@ -32,30 +32,7 @@ Environmental theory suggests that hotter days should boost ozone (O₃), but th
 ________________________________________
 💾 Advanced SQL analytics
 After loading the cleaned data into SQLite/PostgreSQL, SQL was used for finer grained, time series analysis with window functions and CTEs.
-SQL Scenario 1 – Detecting sudden AQI spikes
-Goal: Flag possible environmental incidents by finding hours where AQI jumps to at least double the value of the previous hour for the same city.
-Approach: Use the LAG() window function to compare each row to its immediately preceding timestamp.
-sql
-WITH LaggedData AS (
-    SELECT 
-        city,
-        timestamp,
-        aqi AS current_aqi,
-        -- Previous hour's AQI for the same city
-        LAG(aqi) OVER (
-            PARTITION BY city
-            ORDER BY timestamp
-        ) AS prev_hour_aqi
-    FROM pollution_data
-)
-SELECT 
-    city,
-    timestamp,
-    (current_aqi - prev_hour_aqi) AS jump_value
-FROM LaggedData
-WHERE current_aqi >= prev_hour_aqi * 2
-ORDER BY jump_value DESC;
-This query surfaces the biggest hour to hour AQI surges, which can then be investigated as potential fires, industrial releases, or major traffic events.
+
 
 
 
